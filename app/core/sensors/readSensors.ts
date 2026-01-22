@@ -1,4 +1,7 @@
 import { IMUState } from "../types/IMUState";
+import { initMagnetometer } from "./readMagnetometer";
+
+
 
 export const imuState: IMUState = {
   accel: { x: 0, y: 0, z: 0 },
@@ -9,6 +12,7 @@ export const imuState: IMUState = {
 };
 
 export async function initSensors() {
+    initMagnetometer();
   if (
     typeof DeviceMotionEvent !== "undefined" &&
     typeof (DeviceMotionEvent as any).requestPermission === "function"

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { initSensors } from "./core/sensors/readSensors";
-import { updateFusion } from "./core/fusion/madgwick";
+import { updateFusion } from "./core/fusion/madgwickMag";
 import { imuState } from "./core/sensors/readSensors";
 
 export default function Page() {
