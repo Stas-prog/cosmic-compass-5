@@ -8,8 +8,21 @@ export const imuState: IMUState = {
   timestamp: Date.now()
 };
 
-export function initSensors() {
+export async function initSensors() {
+  if (
+    typeof DeviceMotionEvent !== "undefined" &&
+    typeof (DeviceMotionEvent as any).requestPermission === "function"
+  ) {
+    const res = await (DeviceMotionEvent as any).requestPermission();
+    if (res !== "granted") {
+      alert("Permission denied for motion sensors");
+      return;
+    }
+  }
+
   window.addEventListener("devicemotion", (e) => {
+    console.log("DEVICEMOTION:", e.accelerationIncludingGravity, e.rotationRate);
+
     if (!e.accelerationIncludingGravity) return;
 
     imuState.accel.x = e.accelerationIncludingGravity.x ?? 0;
@@ -23,3 +36,4 @@ export function initSensors() {
     imuState.timestamp = Date.now();
   });
 }
+

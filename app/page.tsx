@@ -30,6 +30,12 @@ export default function Page() {
       <h1>IMU Compass Core</h1>
       <p>Madgwick Sensor Fusion Active</p>
       <p>Check console for quaternion</p>
+      <button
+       onClick={async () => {const { initSensors } = await import("./core/sensors/readSensors");initSensors(); }}
+>
+  Enable Sensors
+</button>
+
     </main>
   );
 }
