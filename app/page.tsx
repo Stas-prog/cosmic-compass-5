@@ -9,19 +9,27 @@ export default function Page() {
   useEffect(() => {
     initSensors();
 
-    const loop = () => {
-      updateFusion();
-      console.log("IMU Quaternion:", imuState.quaternion);
+    let last = performance.now();
+
+    const loop = (t: number) => {
+      const dt = (t - last) / 1000;
+      last = t;
+
+      updateFusion(dt);
+
+      console.log("EARTH-FRAME QUATERNION:", imuState.quaternion);
+
       requestAnimationFrame(loop);
     };
 
-    loop();
+    requestAnimationFrame(loop);
   }, []);
 
   return (
     <main style={{ padding: 20 }}>
       <h1>IMU Compass Core</h1>
-      <p>Sensor Fusion Running...</p>
+      <p>Madgwick Sensor Fusion Active</p>
+      <p>Check console for quaternion</p>
     </main>
   );
 }
