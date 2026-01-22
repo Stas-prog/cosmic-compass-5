@@ -1,24 +1,22 @@
-"use client";
-
 import { useEffect } from "react";
-import { initSensors } from "./core/sensors/readSensors";
-import { updateFusion } from "./core/fusion/madgwickMag";
-import { imuState } from "./core/sensors/readSensors";
+import { View, Text } from "react-native";
+import { initSensors, imuState } from "./core/sensors/readSensors";
+import { updateFusion } from "./core/fusion/madgwick";
 
-export default function Page() {
+export default function App() {
   useEffect(() => {
     initSensors();
 
-    let last = performance.now();
+    let last = Date.now();
 
-    const loop = (t: number) => {
-      const dt = (t - last) / 1000;
-      last = t;
+    const loop = () => {
+      const now = Date.now();
+      const dt = (now - last) / 1000;
+      last = now;
 
       updateFusion(dt);
 
-      console.log("EARTH-FRAME QUATERNION:", imuState.quaternion);
-
+      console.log("QUAT:", imuState.quaternion);
       requestAnimationFrame(loop);
     };
 
@@ -26,16 +24,8 @@ export default function Page() {
   }, []);
 
   return (
-    <main style={{ padding: 20 }}>
-      <h1>IMU Compass Core</h1>
-      <p>Madgwick Sensor Fusion Active</p>
-      <p>Check console for quaternion</p>
-      <button
-       onClick={async () => {const { initSensors } = await import("./core/sensors/readSensors");initSensors(); }}
->
-  Enable Sensors
-</button>
-
-    </main>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>IMU Native Core Running...</Text>
+    </View>
   );
 }

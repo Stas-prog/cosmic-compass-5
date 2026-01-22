@@ -12,9 +12,8 @@ export type Quaternion = {
 };
 
 export type IMUState = {
-  accel: Vector3;   // gravity
-  gyro: Vector3;    // angular velocity
-  mag: Vector3;     // magnetic north
-  quaternion: Quaternion; // earth-frame orientation
-  timestamp: number;
+  accel: Vector3;
+  gyro: Vector3;
+  mag: Vector3;
+  quaternion: Quaternion;
 };
